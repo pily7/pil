@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="look.product.dao.ProjectDao">
+
+	<select id="findPageObjects" resultType="map">
+		select * from (select t.ename ename,t.subject subject,t.note note,
+		rownum as row_num, ceil(rownum / 5) as page_num
+		from team_p t join project_p p on p.ename=t.ename
+		<include refid="queryWhereId" />
+		)
+		where page_num = ${pageCurrent}
+	</select>
+	<select id="getRowCount" resultType="int">
+		select count(*) from team_p
+	</select>
+	<sql id="queryWhereId">
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				t.subject like '%${keyword}%'
+			</if>
+		</where>
+	</sql>
+
+</mapper>
