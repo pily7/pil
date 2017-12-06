@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="look.product.dao.ProjectDao">
-
+        
+        <!--  发表文章 -->
+        <insert id="insertArticle">
+            insert into article values(concat('a',article_seq.nextval),#{subject},#{note},to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),#{usid})
+        </insert>
+        
+        <select id="findObjectById"  resultType="look.product.entity.Project">
+              select id,uname,password from user_p 
+              where  id=#{id}
+        </select>
+       <!-- 用户修改资料 --> 
+        <update id="updateObject" >
+          update user_p
+          set uname=#{uname},password=#{password}
+          where id=#{id}
+      </update>
+       <!-- 注册用户 -->
+      <insert id="save">
+	    INSERT INTO user_p VALUES(concat('u',user_seq_p.nextval),#{uname},#{password},to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'))
+	  </insert>
+        
+        <!-- 用户登录 -->
+        <select id="findByUname"  resultType="look.product.entity.Project">
+              select uname,password from user_p 
+              where uname=#{uname} 
+        </select>
+        
+      <!-- 模糊查询 -->
 	<select id="findPageObjects" resultType="map">
-		select * from (select t.ename ename,t.subject subject,t.note note,
+		select * from (select p.uname uname,t.subject subject,t.note note,t.createTime createTime,
 		rownum as row_num, ceil(rownum / 5) as page_num
-		from team_p t join project_p p on p.ename=t.ename
+		from article t join user_p p on p.id=t.usid
 		<include refid="queryWhereId" />
 		)
 		where page_num = ${pageCurrent}
 	</select>
 	<select id="getRowCount" resultType="int">
-		select count(*) from team_p
+		select count(*) from article
 	</select>
 	<sql id="queryWhereId">
 		<where>
 			<if test="keyword!=null and keyword!='' ">
-				t.subject like '%${keyword}%'
+				t.subject like '%${keyword}%'  or  t.note like '%${keyword}%' or p.uname like '%${keyword}%' 
 			</if>
 		</where>
 	</sql>

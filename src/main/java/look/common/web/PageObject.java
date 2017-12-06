@@ -8,7 +8,7 @@ public class PageObject implements Serializable{
 	/**当前页*/
 	private int pageCurrent=1;
 	/**每页最多能显示的记录数*/
-	private int pageSize=2;
+	private int pageSize=5;
 	/**总记录数*/
 	private int rowCount;
 	/**上一页的最后一条记录位置

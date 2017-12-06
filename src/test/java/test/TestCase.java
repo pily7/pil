@@ -28,8 +28,8 @@ public class TestCase {
 		//1.获取业务对象
 		ProjectService ps = ac.getBean("projectService", ProjectService.class);
 		//2.调用业务对象方法		
-		Map<String,Object> projects = ps.findPageObjects("ss", 2);
-		System.out.println(projects.toString());
+		Map<String,Object> projects = ps.findPageObjects("f", 1);
+		System.out.println("projects"+projects);
 		
 		
 	/*	//3.测试结果是否正确
@@ -39,6 +39,35 @@ public class TestCase {
 		System.out.println(projects);*/
 	}	
 	
+	@Test
+	public void loginObject(){
+		ProjectService ps = ac.getBean("projectService", ProjectService.class);
+		Project p = ps.findByUname("001", "1234");
+		System.out.println(p);
+		
+	}
+	
+	@Test
+	public void singObject(){
+		ProjectService ps = ac.getBean("projectService", ProjectService.class);
+		Project p = new Project();
+		p.setUname("005");
+		p.setPassword("1234");
+		ps.save(p);
+		System.out.println("ok");	
+	}
+	
+	@Test
+	public void updateObject(){
+		ProjectService ps = ac.getBean("projectService", ProjectService.class);
+		Project p = ps.findObjectById("u22");
+		System.out.println(p);
+		p.setPassword("123456");
+		ps.updateObject(p);
+		System.out.println("ok");	
+	}
+	
+
 	@After
 	public void destroy(){
 		ac.close();

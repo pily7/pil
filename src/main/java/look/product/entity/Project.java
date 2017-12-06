@@ -4,24 +4,32 @@ import java.util.Date;
 
 public class Project {
 
-	private Integer id;
-	private String ename;
+	private String id;
+	private String usid;
+	private String uname;
 	private String email;
 	private String password;
 	private Date createTime;
 	private String subject;
 	private String note;
-	public Integer getId() {
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public String getEname() {
-		return ename;
+	public String getUsid() {
+		return usid;
 	}
-	public void setEname(String ename) {
-		this.ename = ename;
+	public void setUsid(String usid) {
+		this.usid = usid;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
 	}
 	public String getEmail() {
 		return email;
@@ -55,8 +63,8 @@ public class Project {
 	}
 	@Override
 	public String toString() {
-		return "project [id=" + id + ", ename=" + ename + ", email=" + email + ", password=" + password
-				+ ", createTime=" + createTime + ", subject=" + subject + ", note=" + note + "]";
+		return "Project [id=" + id + ", usid=" + usid + ", uname=" + uname + ", email=" + email + ", password="
+				+ password + ", createTime=" + createTime + ", subject=" + subject + ", note=" + note + "]";
 	}
 	
 	
